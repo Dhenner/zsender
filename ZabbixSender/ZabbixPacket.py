@@ -10,7 +10,8 @@ class ZabbixPacket:
     def __str__(self):
         return json.dumps(self.packet)
 
-    def add(self, host, key, value, clock=datetime.now().timestamp()):
+    def add(self, host, key, value, clock=datetime.utcnow()):
+        clock = int((clock - datetime(1970, 1, 1)).total_seconds())
         if (isinstance(clock, int)) or (isinstance(clock, float)):
             metric = {'host': str(host),
                       'key': str(key),
